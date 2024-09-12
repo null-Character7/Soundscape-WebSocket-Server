@@ -31,6 +31,7 @@ export class SpaceManager {
           users: [],
         });
       }
+      console.log(this.spaces.get(spaceId))
   
       // Get the space and add the user to it
       const space = this.spaces.get(spaceId);

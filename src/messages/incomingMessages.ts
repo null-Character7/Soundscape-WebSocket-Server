@@ -19,7 +19,9 @@ export type InitMessageType = z.infer<typeof InitMessageSchema>;
 // Zod schema for UpvoteMessageType
 export const UpvoteMessageSchema = z.object({
     spaceId: z.string().min(1, "spaceId is required"),  // Ensures non-empty string
-    songId: z.string().min(1, "songId is required")     // Ensures non-empty string
+    streamId: z.string().min(1, "songId is required") ,    // Ensures non-empty string
+    userId: z.string().min(1, "userId is required")     // Ensures non-empty string
+
 });
 
 export type UpvoteMessageType = z.infer<typeof UpvoteMessageSchema>;
@@ -28,7 +30,8 @@ export type UpvoteMessageType = z.infer<typeof UpvoteMessageSchema>;
 // Zod schema for DownvoteMessageType
 export const DownvoteMessageSchema = z.object({
     spaceId: z.string().min(1, "spaceId is required"),  // Ensures non-empty string
-    songId: z.string().min(1, "songId is required")     // Ensures non-empty string
+    streamId: z.string().min(1, "songId is required") ,    // Ensures non-empty string
+    userId: z.string().min(1, "userId is required")     // Ensures non-empty string
 });
 
 export type DownvoteMessageType = z.infer<typeof DownvoteMessageSchema>;
@@ -39,7 +42,8 @@ export const AddSongMessageSchema = z.object({
     streamId: z.string().min(1, "streamId is required"),  // Ensures non-empty string
     title: z.string().min(1, "title is required"),        // Ensures non-empty string
     upvotes: z.number().int().nonnegative(),              // Ensures a non-negative integer for upvotes
-    spaceId: z.string().min(1, "spaceId is required")     // Ensures non-empty string
+    spaceId: z.string().min(1, "spaceId is required"),     // Ensures non-empty string
+    userId: z.string().min(1, "userId is required")     // Ensures non-empty string
 });
 
 

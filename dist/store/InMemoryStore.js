@@ -1,63 +1,49 @@
-import { Store, Stream } from "./Store";
-
-export interface Space {
-    spaceId: string;
-    streams: Stream[];
-}
-
-export class InMemoryStore implements Store {
-    private store: Map<string, Space>;
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.InMemoryStore = void 0;
+class InMemoryStore {
     constructor() {
-        this.store = new Map<string, Space>();
+        this.store = new Map();
     }
-
-    initSpace(spaceId: string): void {
+    initSpace(spaceId) {
         this.store.set(spaceId, {
             spaceId,
             streams: []
         });
     }
-
-    getStreams(spaceId: string): Stream[] {
+    getStreams(spaceId) {
         const space = this.store.get(spaceId);
         if (!space) {
             return [];
         }
         return space.streams;
     }
-
-    upvote(spaceId: string, streamId: string) {
+    upvote(spaceId, streamId) {
         const space = this.store.get(spaceId);
         if (space) {
             const stream = space.streams.find(s => s.streamId === streamId);
             if (stream) {
-                stream.upvotes += 1;  // Increment upvotes
+                stream.upvotes += 1; // Increment upvotes
             }
             return space.streams;
         }
         return [];
-        
     }
-
-    downvote(spaceId: string, streamId: string) {
+    downvote(spaceId, streamId) {
         const space = this.store.get(spaceId);
         if (space) {
             const stream = space.streams.find(s => s.streamId === streamId);
             if (stream && stream.upvotes > 0) {
-                stream.upvotes -= 1;  // Decrement upvotes, ensuring it doesn't go below 0
+                stream.upvotes -= 1; // Decrement upvotes, ensuring it doesn't go below 0
             }
             return space.streams;
         }
         return [];
-        
     }
-
-    addStreams(spaceId: string, streamId: string, title: string, upvotes: number = 0){
-        if(!this.store.get(spaceId)){
+    addStreams(spaceId, streamId, title, upvotes = 0) {
+        if (!this.store.get(spaceId)) {
             this.initSpace(spaceId);
         }
-        
         const space = this.store.get(spaceId);
         if (space) {
             // Add a new stream to the space
@@ -67,6 +53,7 @@ export class InMemoryStore implements Store {
                 upvotes
             });
         }
-        return space?.streams;
+        return space === null || space === void 0 ? void 0 : space.streams;
     }
 }
+exports.InMemoryStore = InMemoryStore;

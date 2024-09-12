@@ -64,14 +64,9 @@ function messageHandler(ws: connection, message: any) {
 
     if(message.type==SupportedMessage.AddSong){
         const payload=message.payload;
-        const user=spaceManager.getUser(payload.spaceId,payload.userId);
-
-        if(!user){
-            console.error("User not found in the db");
-            return;
-        }
         let streams=store.addStreams(payload.spaceId,payload.streamId,payload.title,payload.upvotes);
         if(!streams){
+            console.log("stream not created")
             return;
         }
         const outgoingPayload: OutgoingMessage={
@@ -81,6 +76,7 @@ function messageHandler(ws: connection, message: any) {
             }
         }
         spaceManager.broadcast(payload.spaceId,payload.userId,outgoingPayload);
+        console.log("Song added")
     }
 
     if(message.type==SupportedMessage.Upvote){
@@ -99,9 +95,10 @@ function messageHandler(ws: connection, message: any) {
             }
         }
         spaceManager.broadcast(payload.spaceId,payload.userId,outgoingPayload);
+        console.log("Upvote successful");
     }
 
-    if(message.type==SupportedMessage.Upvote){
+    if(message.type==SupportedMessage.Downvote){
         const payload=message.payload;
         const user=spaceManager.getUser(payload.spaceId,payload.userId);
 
@@ -109,7 +106,7 @@ function messageHandler(ws: connection, message: any) {
             console.error("User not found in the db");
             return;
         }
-        let streams=store.upvote(payload.spaceId,payload.streamId);
+        let streams=store.downvote(payload.spaceId,payload.streamId);
         const outgoingPayload: OutgoingMessage={
             type:OutgoingSupportedMessages.UpvoteSuccess,
             payload: {
@@ -117,5 +114,6 @@ function messageHandler(ws: connection, message: any) {
             }
         }
         spaceManager.broadcast(payload.spaceId,payload.userId,outgoingPayload);
+        console.log("Downvote successful");
     }
 }
