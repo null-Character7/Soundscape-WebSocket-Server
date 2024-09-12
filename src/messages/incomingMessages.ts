@@ -5,7 +5,8 @@ export enum SupportedMessage {
     JoinRoom = "JOIN_ROOM",
     Upvote = "UPVOTE",
     Downvote = "DOWNVOTE",
-    AddSong = "ADD_SONG"
+    AddSong = "ADD_SONG",
+    PlayNext = "PLAY_NEXT"
 }
 
 // Define the payload types for each message
@@ -49,10 +50,23 @@ export const AddSongMessageSchema = z.object({
 
 export type AddSongMessageType = z.infer<typeof AddSongMessageSchema>;
 
+// Zod schema for PlayNextType
+export const PlayNextSchema = z.object({
+    streamId: z.string().min(1, "streamId is required"),  // Ensures non-empty string
+    title: z.string().min(1, "title is required"),        // Ensures non-empty string
+    upvotes: z.number().int().nonnegative(),              // Ensures a non-negative integer for upvotes
+    spaceId: z.string().min(1, "spaceId is required"),     // Ensures non-empty string
+    userId: z.string().min(1, "userId is required")     // Ensures non-empty string
+});
+
+
+export type PlayNextType = z.infer<typeof PlayNextSchema>;
+
 
 // Union type representing possible incoming message types
 export type IncomingMessage = 
     | { type: SupportedMessage.JoinRoom; payload: InitMessageType }
     | { type: SupportedMessage.Upvote; payload: UpvoteMessageType }
     | { type: SupportedMessage.Downvote; payload: DownvoteMessageType }
-    | { type: SupportedMessage.AddSong; payload: AddSongMessageType };
+    | { type: SupportedMessage.AddSong; payload: AddSongMessageType }
+    | { type: SupportedMessage.PlayNext; payload: PlayNextType };
