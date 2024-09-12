@@ -8,7 +8,8 @@ class InMemoryStore {
     initSpace(spaceId) {
         this.store.set(spaceId, {
             spaceId,
-            streams: []
+            streams: [],
+            currentStream: null
         });
     }
     getStreams(spaceId) {
@@ -54,6 +55,23 @@ class InMemoryStore {
             });
         }
         return space === null || space === void 0 ? void 0 : space.streams;
+    }
+    addCurrentStream(spaceId, streamId, title, upvotes) {
+        const space = this.store.get(spaceId);
+        if (space) {
+            // Remove the stream from the streams[] array, if it exists
+            space.streams = space.streams.filter(stream => stream.streamId !== streamId);
+            // Add a new stream to the currentStream of the space
+            space.currentStream = {
+                streamId,
+                title,
+                upvotes,
+            };
+        }
+        return {
+            streams: space === null || space === void 0 ? void 0 : space.streams,
+            currentStream: space === null || space === void 0 ? void 0 : space.currentStream,
+        };
     }
 }
 exports.InMemoryStore = InMemoryStore;

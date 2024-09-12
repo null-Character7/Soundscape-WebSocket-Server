@@ -28,4 +28,8 @@ export abstract class Store {
     downvote(spaceId: string, streamId:string){
         
     }
+
+    addCurrentStream(spaceId:string, streamId:string, title:string, upvotes:number){
+        
+    }
 }

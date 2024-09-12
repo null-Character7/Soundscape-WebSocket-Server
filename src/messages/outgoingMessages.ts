@@ -2,22 +2,27 @@
 export enum SupportedMessage {
     UpvoteSuccess = "UPVOTE_SUCCESS",
     DownvoteSuccess = "DOWNVOTE_SUCCESS",
-    SongAdded = "SONG_ADDED"
+    SongAdded = "SONG_ADDED",
+    PlayingNext = "PLAYING_NEXT"
 }
 import { Stream } from "../store/Store";
 
 export type MessagePayload = {
-    streams: Stream[]; // Include an array of streams in the payload
+    streams: Stream[]; // Array of streams
+    currentStream: Stream | null; // Current stream, can be null if no stream is playing
 };
 
 export type OutgoingMessage = {
     type: SupportedMessage.UpvoteSuccess,
-    payload: MessagePayload
+    payload: Partial<MessagePayload>
 } | {
     type: SupportedMessage.DownvoteSuccess,
-    payload: MessagePayload
+    payload: Partial<MessagePayload>
 } | {
     type: SupportedMessage.SongAdded,
-    payload: MessagePayload
+    payload: Partial<MessagePayload>
+} | {
+    type: SupportedMessage.PlayingNext,
+    payload: Partial<MessagePayload>
 };
 

@@ -6,4 +6,5 @@ var SupportedMessage;
     SupportedMessage["UpvoteSuccess"] = "UPVOTE_SUCCESS";
     SupportedMessage["DownvoteSuccess"] = "DOWNVOTE_SUCCESS";
     SupportedMessage["SongAdded"] = "SONG_ADDED";
+    SupportedMessage["PlayingNext"] = "PLAYING_NEXT";
 })(SupportedMessage || (exports.SupportedMessage = SupportedMessage = {}));

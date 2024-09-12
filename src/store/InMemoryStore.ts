@@ -3,6 +3,7 @@ import { Store, Stream } from "./Store";
 export interface Space {
     spaceId: string;
     streams: Stream[];
+    currentStream: Stream | null;
 }
 
 export class InMemoryStore implements Store {
@@ -15,7 +16,8 @@ export class InMemoryStore implements Store {
     initSpace(spaceId: string): void {
         this.store.set(spaceId, {
             spaceId,
-            streams: []
+            streams: [],
+            currentStream: null
         });
     }
 
@@ -69,4 +71,25 @@ export class InMemoryStore implements Store {
         }
         return space?.streams;
     }
+
+    addCurrentStream(spaceId: string, streamId: string, title: string, upvotes: number) {
+        const space = this.store.get(spaceId);
+        if (space) {
+            // Remove the stream from the streams[] array, if it exists
+            space.streams = space.streams.filter(stream => stream.streamId !== streamId);
+    
+            // Add a new stream to the currentStream of the space
+            space.currentStream = {
+                streamId,
+                title,
+                upvotes,
+            };
+        }
+    
+        return {
+            streams: space?.streams,
+            currentStream: space?.currentStream,
+        };
+    }
+    
 }

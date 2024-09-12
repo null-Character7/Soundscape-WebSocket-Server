@@ -79,6 +79,29 @@ function messageHandler(ws: connection, message: any) {
         console.log("Song added")
     }
 
+    if(message.type==SupportedMessage.PlayNext){
+        const payload=message.payload;
+        let res=store.addCurrentStream(payload.spaceId,payload.streamId,payload.title,payload.upvotes);
+        const { streams, currentStream } = res;
+        if(!streams){
+            console.log("errr")
+            return;
+        }
+        if(!currentStream){
+            console.log("errr")
+            return;
+        }
+        const outgoingPayload: OutgoingMessage={
+            type:OutgoingSupportedMessages.PlayingNext,
+            payload: {
+                streams:streams,
+                currentStream:currentStream
+            }
+        }
+        spaceManager.broadcast(payload.spaceId,payload.userId,outgoingPayload);
+        console.log("Next started playing")
+    }
+
     if(message.type==SupportedMessage.Upvote){
         const payload=message.payload;
         const user=spaceManager.getUser(payload.spaceId,payload.userId);
