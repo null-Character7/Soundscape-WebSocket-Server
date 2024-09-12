@@ -18,6 +18,7 @@ export type InitMessageType = z.infer<typeof InitMessageSchema>;
 
 // Zod schema for UpvoteMessageType
 export const UpvoteMessageSchema = z.object({
+    spaceId: z.string().min(1, "spaceId is required"),  // Ensures non-empty string
     songId: z.string().min(1, "songId is required")     // Ensures non-empty string
 });
 
@@ -26,6 +27,7 @@ export type UpvoteMessageType = z.infer<typeof UpvoteMessageSchema>;
 
 // Zod schema for DownvoteMessageType
 export const DownvoteMessageSchema = z.object({
+    spaceId: z.string().min(1, "spaceId is required"),  // Ensures non-empty string
     songId: z.string().min(1, "songId is required")     // Ensures non-empty string
 });
 
@@ -34,9 +36,12 @@ export type DownvoteMessageType = z.infer<typeof DownvoteMessageSchema>;
 
 // Zod schema for AddSongMessageType
 export const AddSongMessageSchema = z.object({
-    songUrl: z.string().url("Invalid URL format"),      // Ensures a valid URL
-    songTitle: z.string().min(1, "songTitle is required") // Ensures non-empty string
+    streamId: z.string().min(1, "streamId is required"),  // Ensures non-empty string
+    title: z.string().min(1, "title is required"),        // Ensures non-empty string
+    upvotes: z.number().int().nonnegative(),              // Ensures a non-negative integer for upvotes
+    spaceId: z.string().min(1, "spaceId is required")     // Ensures non-empty string
 });
+
 
 export type AddSongMessageType = z.infer<typeof AddSongMessageSchema>;
 

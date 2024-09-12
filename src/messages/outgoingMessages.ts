@@ -1,29 +1,23 @@
 
 export enum SupportedMessage {
-    AddChat =  "ADD_CHAT",
     UpvoteSuccess = "UPVOTE_SUCCESS",
     DownvoteSuccess = "DOWNVOTE_SUCCESS",
     SongAdded = "SONG_ADDED"
 }
+import { Stream } from "../store/Store";
 
-type MessagePayload = {
-    creatorId: string;
-    userId: string;
-    streamId: string;
-    upvotes: number;
-}
+export type MessagePayload = {
+    streams: Stream[]; // Include an array of streams in the payload
+};
 
 export type OutgoingMessage = {
-    type: SupportedMessage.AddChat,
-    payload: Partial<MessagePayload>
-} | {
     type: SupportedMessage.UpvoteSuccess,
-    payload: Partial<MessagePayload>
+    payload: MessagePayload
 } | {
     type: SupportedMessage.DownvoteSuccess,
-    payload: Partial<MessagePayload>
+    payload: MessagePayload
 } | {
     type: SupportedMessage.SongAdded,
-    payload: Partial<MessagePayload>
+    payload: MessagePayload
 };
 

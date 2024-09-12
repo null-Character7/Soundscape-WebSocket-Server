@@ -2,7 +2,10 @@ import http from 'http';
 import {server as WebSocketServer, connection} from "websocket"
 import { OutgoingMessage, SupportedMessage as OutgoingSupportedMessages } from './messages/outgoingMessages';
 import { IncomingMessage, SupportedMessage } from './messages/incomingMessages';
-
+import { InMemoryStore } from './store/InMemoryStore';
+import { SpaceManager } from './spaceManager';
+const spaceManager = new SpaceManager();
+const store=new InMemoryStore();
 
 var server = http.createServer(function(request: any, response: any) {
     console.log((new Date()) + ' Received request for ' + request.url);
@@ -54,5 +57,65 @@ wsServer.on('request', function(request) {
 });
 
 function messageHandler(ws: connection, message: any) {
-    
+    if(message.type == SupportedMessage.JoinRoom){
+        const payload=message.payload;
+        spaceManager.addUser(payload.userId,ws,payload.spaceId);
+    }
+
+    if(message.type==SupportedMessage.AddSong){
+        const payload=message.payload;
+        const user=spaceManager.getUser(payload.spaceId,payload.userId);
+
+        if(!user){
+            console.error("User not found in the db");
+            return;
+        }
+        let streams=store.addStreams(payload.spaceId,payload.streamId,payload.title,payload.upvotes);
+        if(!streams){
+            return;
+        }
+        const outgoingPayload: OutgoingMessage={
+            type:OutgoingSupportedMessages.SongAdded,
+            payload: {
+                streams:streams
+            }
+        }
+        spaceManager.broadcast(payload.spaceId,payload.userId,outgoingPayload);
+    }
+
+    if(message.type==SupportedMessage.Upvote){
+        const payload=message.payload;
+        const user=spaceManager.getUser(payload.spaceId,payload.userId);
+
+        if(!user){
+            console.error("User not found in the db");
+            return;
+        }
+        let streams=store.upvote(payload.spaceId,payload.streamId);
+        const outgoingPayload: OutgoingMessage={
+            type:OutgoingSupportedMessages.UpvoteSuccess,
+            payload: {
+                streams:streams
+            }
+        }
+        spaceManager.broadcast(payload.spaceId,payload.userId,outgoingPayload);
+    }
+
+    if(message.type==SupportedMessage.Upvote){
+        const payload=message.payload;
+        const user=spaceManager.getUser(payload.spaceId,payload.userId);
+
+        if(!user){
+            console.error("User not found in the db");
+            return;
+        }
+        let streams=store.upvote(payload.spaceId,payload.streamId);
+        const outgoingPayload: OutgoingMessage={
+            type:OutgoingSupportedMessages.UpvoteSuccess,
+            payload: {
+                streams:streams
+            }
+        }
+        spaceManager.broadcast(payload.spaceId,payload.userId,outgoingPayload);
+    }
 }
