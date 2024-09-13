@@ -1,10 +1,11 @@
-import { Store, Stream } from "./Store";
+import { Store, Stream, curStream } from "./Store";
 
 export interface Space {
     spaceId: string;
     streams: Stream[];
-    currentStream: Stream | null;
+    currentStream: curStream | null;
 }
+
 
 export class InMemoryStore implements Store {
     private store: Map<string, Space>;
@@ -72,7 +73,7 @@ export class InMemoryStore implements Store {
         return space?.streams;
     }
 
-    addCurrentStream(spaceId: string, streamId: string, title: string, upvotes: number) {
+    addCurrentStream(spaceId: string, streamId: string, title: string, extractedId: string) {
         const space = this.store.get(spaceId);
         if (space) {
             // Remove the stream from the streams[] array, if it exists
@@ -82,7 +83,7 @@ export class InMemoryStore implements Store {
             space.currentStream = {
                 streamId,
                 title,
-                upvotes,
+                extractedId
             };
         }
     

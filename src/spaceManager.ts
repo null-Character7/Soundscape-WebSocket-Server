@@ -1,5 +1,6 @@
 import { connection } from "websocket";
 import { OutgoingMessage } from "./messages/outgoingMessages";
+import { Stream, curStream } from "./store/Store";
 
 // room.ts
 interface User {
@@ -9,8 +10,8 @@ interface User {
 
 interface Space {
     spaceId: string;
-    streams: any[];
-    currentSong: any;
+    streams: Stream[];
+    currentSong: curStream | null;
     users: User[];
 }
 

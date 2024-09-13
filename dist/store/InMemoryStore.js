@@ -56,7 +56,7 @@ class InMemoryStore {
         }
         return space === null || space === void 0 ? void 0 : space.streams;
     }
-    addCurrentStream(spaceId, streamId, title, upvotes) {
+    addCurrentStream(spaceId, streamId, title, extractedId) {
         const space = this.store.get(spaceId);
         if (space) {
             // Remove the stream from the streams[] array, if it exists
@@ -65,7 +65,7 @@ class InMemoryStore {
             space.currentStream = {
                 streamId,
                 title,
-                upvotes,
+                extractedId
             };
         }
         return {

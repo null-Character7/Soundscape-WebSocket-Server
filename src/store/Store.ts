@@ -1,7 +1,13 @@
 export interface Stream {
     streamId :string,
-    title: string;
+    title: string,
     upvotes:number
+}
+
+export interface curStream {
+    streamId: string,
+    title: string,
+    extractedId:string | null
 }
 
 export abstract class Store {
@@ -29,7 +35,7 @@ export abstract class Store {
         
     }
 
-    addCurrentStream(spaceId:string, streamId:string, title:string, upvotes:number){
+    addCurrentStream(spaceId:string, streamId:string, title:string, url:string){
         
     }
 }

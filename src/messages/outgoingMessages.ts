@@ -5,11 +5,11 @@ export enum SupportedMessage {
     SongAdded = "SONG_ADDED",
     PlayingNext = "PLAYING_NEXT"
 }
-import { Stream } from "../store/Store";
+import { curStream, Stream } from "../store/Store";
 
 export type MessagePayload = {
     streams: Stream[]; // Array of streams
-    currentStream: Stream | null; // Current stream, can be null if no stream is playing
+    currentStream: curStream | null; // Current stream, can be null if no stream is playing
 };
 
 export type OutgoingMessage = {

@@ -14,7 +14,7 @@ class Store {
     }
     downvote(spaceId, streamId) {
     }
-    addCurrentStream(spaceId, streamId, title, upvotes) {
+    addCurrentStream(spaceId, streamId, title, url) {
     }
 }
 exports.Store = Store;
