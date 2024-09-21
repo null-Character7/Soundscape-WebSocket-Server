@@ -64,7 +64,7 @@ function messageHandler(ws: connection, message: any) {
 
     if(message.type==SupportedMessage.AddSong){
         const payload=message.payload;
-        let streams=store.addStreams(payload.spaceId,payload.streamId,payload.title,payload.upvotes);
+        let streams=store.addStreams(payload.spaceId,payload.streamId,payload.title,payload.upvotes,payload.artist);
         if(!streams){
             console.log("stream not created")
             return;
@@ -81,7 +81,7 @@ function messageHandler(ws: connection, message: any) {
 
     if(message.type==SupportedMessage.PlayNext){
         const payload=message.payload;
-        let res=store.addCurrentStream(payload.spaceId,payload.streamId,payload.title,payload.upvotes);
+        let res=store.addCurrentStream(payload.spaceId,payload.streamId,payload.title,payload.upvotes,payload.artist);
         const { streams, currentStream } = res;
         if(!streams){
             console.log("errr")

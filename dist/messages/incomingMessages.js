@@ -37,7 +37,8 @@ exports.AddSongMessageSchema = zod_1.default.object({
     title: zod_1.default.string().min(1, "title is required"), // Ensures non-empty string
     upvotes: zod_1.default.number().int().nonnegative(), // Ensures a non-negative integer for upvotes
     spaceId: zod_1.default.string().min(1, "spaceId is required"), // Ensures non-empty string
-    userId: zod_1.default.string().min(1, "userId is required") // Ensures non-empty string
+    userId: zod_1.default.string().min(1, "userId is required"), // Ensures non-empty string
+    artist: zod_1.default.string() // Ensures non-empty string
 });
 // Zod schema for PlayNextType
 exports.PlayNextSchema = zod_1.default.object({
@@ -45,5 +46,6 @@ exports.PlayNextSchema = zod_1.default.object({
     title: zod_1.default.string().min(1, "title is required"), // Ensures non-empty string
     extractedId: zod_1.default.string().min(1, "url is req"), // Ensures a non-negative integer for upvotes
     spaceId: zod_1.default.string().min(1, "spaceId is required"), // Ensures non-empty string
-    userId: zod_1.default.string().min(1, "userId is required") // Ensures non-empty string
+    userId: zod_1.default.string().min(1, "userId is required"), // Ensures non-empty string
+    artist: zod_1.default.string() // Ensures non-empty string
 });

@@ -56,7 +56,7 @@ export class InMemoryStore implements Store {
         
     }
 
-    addStreams(spaceId: string, streamId: string, title: string, upvotes: number = 0){
+    addStreams(spaceId: string, streamId: string, title: string, upvotes: number = 0,artist:string){
         if(!this.store.get(spaceId)){
             this.initSpace(spaceId);
         }
@@ -67,13 +67,14 @@ export class InMemoryStore implements Store {
             space.streams.push({
                 streamId,
                 title,
-                upvotes
+                upvotes,
+                artist
             });
         }
         return space?.streams;
     }
 
-    addCurrentStream(spaceId: string, streamId: string, title: string, extractedId: string) {
+    addCurrentStream(spaceId: string, streamId: string, title: string, extractedId: string, artist: string) {
         const space = this.store.get(spaceId);
         if (space) {
             // Remove the stream from the streams[] array, if it exists
@@ -83,7 +84,8 @@ export class InMemoryStore implements Store {
             space.currentStream = {
                 streamId,
                 title,
-                extractedId
+                extractedId,
+                artist
             };
         }
     

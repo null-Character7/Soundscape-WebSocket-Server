@@ -41,7 +41,7 @@ class InMemoryStore {
         }
         return [];
     }
-    addStreams(spaceId, streamId, title, upvotes = 0) {
+    addStreams(spaceId, streamId, title, upvotes = 0, artist) {
         if (!this.store.get(spaceId)) {
             this.initSpace(spaceId);
         }
@@ -51,12 +51,13 @@ class InMemoryStore {
             space.streams.push({
                 streamId,
                 title,
-                upvotes
+                upvotes,
+                artist
             });
         }
         return space === null || space === void 0 ? void 0 : space.streams;
     }
-    addCurrentStream(spaceId, streamId, title, extractedId) {
+    addCurrentStream(spaceId, streamId, title, extractedId, artist) {
         const space = this.store.get(spaceId);
         if (space) {
             // Remove the stream from the streams[] array, if it exists
@@ -65,7 +66,8 @@ class InMemoryStore {
             space.currentStream = {
                 streamId,
                 title,
-                extractedId
+                extractedId,
+                artist
             };
         }
         return {

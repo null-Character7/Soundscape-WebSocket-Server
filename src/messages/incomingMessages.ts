@@ -44,7 +44,8 @@ export const AddSongMessageSchema = z.object({
     title: z.string().min(1, "title is required"),        // Ensures non-empty string
     upvotes: z.number().int().nonnegative(),              // Ensures a non-negative integer for upvotes
     spaceId: z.string().min(1, "spaceId is required"),     // Ensures non-empty string
-    userId: z.string().min(1, "userId is required")     // Ensures non-empty string
+    userId: z.string().min(1, "userId is required"),     // Ensures non-empty string
+    artist: z.string()     // Ensures non-empty string
 });
 
 
@@ -56,7 +57,8 @@ export const PlayNextSchema = z.object({
     title: z.string().min(1, "title is required"),        // Ensures non-empty string
     extractedId: z.string().min(1,"url is req"),              // Ensures a non-negative integer for upvotes
     spaceId: z.string().min(1, "spaceId is required"),     // Ensures non-empty string
-    userId: z.string().min(1, "userId is required")     // Ensures non-empty string
+    userId: z.string().min(1, "userId is required"),     // Ensures non-empty string
+    artist: z.string()     // Ensures non-empty string
 });
 
 

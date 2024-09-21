@@ -8,13 +8,13 @@ class Store {
     }
     getStreams(spaceId, streamId) {
     }
-    addStreams(spaceId, streamId, title, upvotes) {
+    addStreams(spaceId, streamId, title, upvotes, artist) {
     }
     upvote(spaceId, streamId) {
     }
     downvote(spaceId, streamId) {
     }
-    addCurrentStream(spaceId, streamId, title, url) {
+    addCurrentStream(spaceId, streamId, title, url, artist) {
     }
 }
 exports.Store = Store;
